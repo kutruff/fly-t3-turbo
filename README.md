@@ -37,8 +37,9 @@ When you launch vscode the dev container it will automatically launch a local po
 1. Fork this repo or use it as a template.
 1. In VSCode, hit `F1` and run the `Dev Containers: Clone Repository in Named Container Volume`
 1. Paste your repo url in the prompt.
+1. Create a new container volume.
 1. Name your container volume to match the name of your project.
-1. For the folder name it doesn't matter. I use `code`.
+1. Use your project name for the folder name as well.
 1. Wait for the container to build and launch. This may take a minute or two the first time, but will be fast next time you launch VS.
 
 ### Accounts and secrets setup
@@ -71,7 +72,7 @@ fly auth login
 
 7. Authorize fly to push docker images
 
-```
+```bash
 fly auth docker
 ```
 
@@ -92,9 +93,9 @@ fly tokens create org
 
 Pick your personal org or the org you made for the project. org tokens allow you to use them for several apps at once.
 
-9. Set your environment variables in both `deployment/web.toml`. `APP_NAME` and region are your fly.io web app name you picked earliear
+9. Set your environment variables in `deployment/web.toml`. `APP_NAME` and region are your fly.io web app name you picked earlier.  Change all the `fly.io` urls to match your app name.
 
-10. Set the similarly named environment variables in `.github/workflows/web.yml`. Change all the urls to match your app name.
+10. Set the similarly named environment variables in `.github/workflows/web.yml`. (app name and region)
 
 11. install dependencies
 
@@ -105,14 +106,21 @@ pnpm i
 12. Test your app locally which should now be at http://localhost:3000. The local postgres container is already funning for you.
 
 ```bash
+pnpm db:push 
 pnpm dev
 ```
 
-13. Builda and deploy a full stack to fly.io. You'll get a next.js deployment and a postgres cluster. It will also build and run the one-off DB migrator for you.
+13. Build and deploy a full stack to fly.io. You'll get a next.js deployment and a postgres cluster. It will also build and run the one-off DB migrator for you.
+
+You will be prompted to enter you discord secret and your `NEXTAUTH_SECRET` that are in your .env files. You can get those from the discord developer portal. 
 
 ```bash
-./scripts/create-full-stack.sh -a your-app-name -o organization -r region
+./scripts/create-full-stack.sh -a your-app-name -o organization -r iad
 ```
+
+Just use a single node postgres cluster, and don't let it scale to zero. You can change that later.  
+
+You can now visit your app at `https://<your-app-name>.fly.dev`
 
 14. You can also test the same container locally with docker compose:
 

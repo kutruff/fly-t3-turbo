@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.241.1/containers/typescript-node
 {
-	"name": "Gadget - Dev Container",
+	"name": "T3 - Dev Container",
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "app",
 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
@@ -66,7 +66,6 @@
 		"PGPASSWORD": "postgres"
 	},
 	"features": {
-		"ghcr.io/devcontainers/features/python:1": {},
 		"docker-from-docker": "latest"
 	}
 }
