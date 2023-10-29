@@ -1,0 +1,25 @@
+name: Web Fly.io Deployment
+
+# on:
+#   push:
+#     branches:
+#       - main
+
+on: workflow_dispatch
+
+jobs:
+  deploy:
+    name: Deploy app
+    runs-on: ubuntu-latest
+    env:
+      APP_NAME: fly-t3-demo
+      DB_NAME: postgres
+      REGION: iad
+      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: scripts/build-db-migrator.sh -a ${APP_NAME}
+      - run: flyctl auth docker
+      - run: scripts/deploy-db-migrator.sh -a ${APP_NAME} -r ${REGION}
+      - run: scripts/deploy-web.sh

@@ -1,0 +1,72 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.241.1/containers/typescript-node
+{
+	"name": "Gadget - Dev Container",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	// Configure tool-specific properties.
+	"customizations": {
+		// Configure properties specific to VS Code.
+		"vscode": {
+			// Add the IDs of extensions you want installed when the container is created.
+			"extensions": [
+				"esbenp.prettier-vscode",
+				"dbaeumer.vscode-eslint",
+				"bradlc.vscode-tailwindcss",
+				"ms-azuretools.vscode-docker",
+				"GitHub.vscode-pull-request-github",
+				"eamodio.gitlens",
+				"pflannery.vscode-versionlens",
+				"redhat.vscode-yaml",
+				"mtxr.sqltools",
+				"mtxr.sqltools-driver-pg",
+				"ckolkman.vscode-postgres",
+				"GitHub.copilot",
+				"GitHub.copilot-labs",
+				"netcorext.uuid-generator",
+				"thebearingedge.vscode-sql-lit",
+				"nicoespeon.abracadabra",				
+				"ms-vscode.cpptools",
+				"github.vscode-github-actions"
+			],
+			"settings": {
+				"sqltools.connections": [
+					{
+						"name": "Container database",
+						"driver": "PostgreSQL",
+						"previewLimit": 50,
+						"server": "localhost",
+						"port": 5432,
+						"database": "postgres",
+						"username": "postgres",
+						"password": "postgres"
+					}
+				]
+			}
+		}
+	},
+	//Used to mount to your local machines /dev folder if you want to share files with your containers
+	"mounts": [
+		"source=/dev/,target=/dev/,type=bind,consistency=consistent"
+	],
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [
+		3000,
+		3030	
+	],
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "echo 'Post create command'",
+	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "node",
+	"remoteEnv": {
+		"PGHOST": "localhost",
+		"PGPORT": "5432",
+		"PGUSER": "postgres",
+		"PGPASSWORD": "postgres"
+	},
+	"features": {
+		"ghcr.io/devcontainers/features/python:1": {},
+		"docker-from-docker": "latest"
+	}
+}

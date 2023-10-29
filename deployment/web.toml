@@ -1,0 +1,28 @@
+# fly.toml app configuration file generated for dark-smoke-144 on 2023-10-25T18:00:01Z
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "fly-t3-demo"
+primary_region = "iad"
+
+[build]
+dockerfile = "../apps/nextjs/Dockerfile"
+
+[build.args]
+NEXTAUTH_URL = 'https://fly-t3-demo.fly.dev'
+BASE_URL = 'https://fly-t3-demo.fly.dev'
+
+[env]
+NEXTAUTH_URL = 'https://fly-t3-demo.fly.dev'
+BASE_URL = 'https://fly-t3-demo.fly.dev'
+DISCORD_CLIENT_ID = '1164960763065139242'
+HOSTNAME = '0.0.0.0'
+
+[http_service]
+internal_port = 3000
+force_https = true
+auto_stop_machines = true
+auto_start_machines = true
+min_machines_running = 1
+processes = ["app"]

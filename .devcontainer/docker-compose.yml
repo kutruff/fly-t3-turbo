@@ -1,0 +1,83 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+      args:
+        # Update 'VARIANT' to pick a version of Python: 3, 3.10, 3.9, 3.8, 3.7, 3.6
+        # Append -bullseye or -buster to pin to an OS version.
+        # Use -bullseye variants on local arm64/Apple Silicon.
+        # Optional Node.js version to install
+        NODE_VERSION: "lts/*"
+    privileged: true
+    volumes:
+      - ../..:/workspaces:cached
+      - aws-credentials:/home/node/.aws
+      - project-data:/data
+
+    # Overrides default command so things don't shut down after the process ends.
+    command: sleep infinity
+
+    # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
+    # network_mode: service:db
+    network_mode: host
+
+    # Uncomment the next line to use a non-root user for all processes.
+    # user: vscode
+
+    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+
+  db:
+    image: postgres:latest
+    # restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "8080:80"
+      - "5432:5432"
+    # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+
+  pgAdmin:
+    image: dpage/pgadmin4
+    # networks:
+    #   - supabase_network_supabasedb
+    ports:
+      - "5433:80"
+    volumes:
+      - pgAdmin-data:/var/lib/pgadmin
+      - pgAdmin-user-data:/user-data
+    environment:
+      PGADMIN_DEFAULT_EMAIL: foo@foo.com
+      PGADMIN_DEFAULT_PASSWORD: "1234"
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
+
+  # grafana:
+  #   image: grafana/grafana:7.3.6
+  #   volumes:
+  #     - grafana:/var/lib/grafana
+  #   environment:
+  #     - GF_AUTH_DISABLE_LOGIN_FORM=true
+  #     - GF_AUTH_ANONYMOUS_ENABLED=true
+  #     - GF_AUTH_ANONYMOUS_ORG_NAME=Main Org.
+  #     - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+  #     - GF_USERS_ALLOW_SIGN_UP=false
+  #   ports:
+  #     - '5000:3000'
+  #   user: 'grafana'
+
+volumes:
+  aws-credentials: {}
+  postgres-data: {}
+  project-data: {}
+  pgAdmin-data: {}
+  pgAdmin-user-data: {}
+  grafana: {}
