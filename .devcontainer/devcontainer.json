@@ -56,7 +56,7 @@
 		3030	
 	],
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "echo 'Post create command'",
+	"postCreateCommand": "npm install -g pnpm",
 	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "node",
 	"remoteEnv": {

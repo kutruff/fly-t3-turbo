@@ -19,8 +19,8 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && curl -fsSL https://raw.githubusercontent.com/platformio/platformio-core/develop/platformio/assets/system/99-platformio-udev.rules | sudo tee /etc/udev/rules.d/99-platformio-udev.rules \
     && service udev restart \
     && usermod -a -G dialout node \
-    && usermod -a -G plugdev node \
-    && npm install -g pnpm 
+    && usermod -a -G plugdev node 
+     
 
 # [Optional] Uncomment if you want to install an additional version of node using nvm
 # ARG EXTRA_NODE_VERSION=10
@@ -28,3 +28,4 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 
 # [Optional] Uncomment if you want to install more global node packages
 # RUN su node -c "npm install -g <your-package-list -here>"
+USER node
