@@ -60,7 +60,7 @@ jobs:
 
   deploy-web:
     needs: build
-    uses: kutruff/gadget/.github/workflows/deploy-web.yml@main
+    uses: kutruff/fly-t3-turbo/.github/workflows/deploy-web.yml@main
     with:
       environment: dev
       # concurrency: dev
