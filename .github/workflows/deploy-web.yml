@@ -30,4 +30,3 @@ jobs:
       - uses: actions/checkout@v4
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: deployment/scripts/deploy-web.sh -a ${{ vars.APP_NAME }}
-        working-directory: ./app
