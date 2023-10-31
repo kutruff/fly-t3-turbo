@@ -31,7 +31,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v2.4.0
         with:
-          package_json_file: ./app/package.json
+          package_json_file: ./package.json
 
       - name: Get pnpm store directory
         id: pnpm-cache
