@@ -1,20 +1,19 @@
-FROM node:18-alpine AS base
-LABEL fly_launch_runtime="Next.js"
+FROM node:20-alpine AS base
+# LABEL fly_launch_runtime="Next.js"
 ENV NEXT_TELEMETRY_DISABLED=1
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-RUN apk add --no-cache libc6-compat
-
+RUN apk add --no-cache libc6-compat bash \
+    && npm install -g pnpm
 FROM base AS pruned-repo
 WORKDIR /app
 
 RUN npm install -g turbo
 COPY . .
-RUN turbo prune --scope=@acme/nextjs --docker
+RUN turbo prune --scope=@acme/nextjs --scope=@acme/db --scope=@acme/db-migrate --docker
 
 FROM base as builder
 WORKDIR /app
 
-RUN npm install -g pnpm
 RUN npm install -g turbo
 
 # First install dependencies (as they change less often)
@@ -29,9 +28,23 @@ COPY turbo.json turbo.json
 
 ## This would be useful for browser environment variables that are actually baked at build time and you aren't passing them in otherwise.
 # COPY .env.production .env.production  
-RUN CI=true SKIP_ENV_VALIDATION=true turbo run build --filter=@acme/nextjs...
+RUN CI=true SKIP_ENV_VALIDATION=true turbo run build --filter=@acme/nextjs... --filter=@acme/db-migrate...
+
+WORKDIR /app/packages/db-migrate
+RUN pnpm pack 
 
 FROM base AS runner
+# Don't run production as root
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+USER nextjs
+
+# copying db-migrate to use the release command in the app potentially
+WORKDIR /db-migrate
+COPY deployment/scripts/db-migrate-release-command.sh .
+COPY --from=builder --chown=nextjs:nodejs /app/packages/db-migrate/*.tgz .
+RUN pnpm i ./*.tgz
+
 WORKDIR /app
 
 EXPOSE 3000
@@ -40,13 +53,8 @@ ENV PORT 3000
 ENV NODE_ENV production
 ENV HOSTNAME localhost
 
-# Don't run production as root
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-USER nextjs
-
-COPY --from=builder /app/apps/nextjs/next.config.mjs .
-COPY --from=builder /app/apps/nextjs/package.json .
+COPY --from=builder --chown=nextjs:nodejs /app/apps/nextjs/next.config.mjs .
+COPY --from=builder --chown=nextjs:nodejs /app/apps/nextjs/package.json .
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing

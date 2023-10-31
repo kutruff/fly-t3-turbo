@@ -3,20 +3,23 @@
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "fly-t3-demo"
+app = "fly-t3"
 primary_region = "iad"
 
 [build]
 dockerfile = "../apps/nextjs/Dockerfile"
 
+[deploy]
+  release_command = "sh /db-migrate/db-migrate-release-command.sh"
+
 [build.args]
-NEXTAUTH_URL = 'https://fly-t3-demo.fly.dev'
-BASE_URL = 'https://fly-t3-demo.fly.dev'
+NEXTAUTH_URL = 'https://fly-t3.fly.dev'
+BASE_URL = 'https://fly-t3.fly.dev'
 
 [env]
-NEXTAUTH_URL = 'https://fly-t3-demo.fly.dev'
-BASE_URL = 'https://fly-t3-demo.fly.dev'
-DISCORD_CLIENT_ID = '1164960763065139242'
+NEXTAUTH_URL = 'https://fly-t3.fly.dev'
+BASE_URL = 'https://fly-t3.fly.dev'
+DISCORD_CLIENT_ID = '3831823598'
 HOSTNAME = '0.0.0.0'
 
 [http_service]

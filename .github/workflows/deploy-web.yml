@@ -1,0 +1,33 @@
+name: Web Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        default: "dev"
+        type: string
+        description: "Enter environment to use. (dev, production)"
+        required: true
+  workflow_call:
+    inputs:
+      environment:
+        default: "dev"
+        type: string
+        description: "Enter environment to use. (dev, production)"
+        required: true
+
+jobs:
+  deploy:
+    name: Deploy web
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    concurrency: ${{ inputs.environment }}
+    env:
+      DB_NAME: postgres
+      REGION: iad
+      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: deployment/scripts/deploy-web.sh -a ${{ vars.APP_NAME }}
+        working-directory: ./app

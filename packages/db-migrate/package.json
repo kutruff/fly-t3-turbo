@@ -1,16 +1,23 @@
 {
-  "name": "@acme/db",
+  "name": "@acme/db-migrate",
   "version": "0.1.0",
   "private": true,
-  "main": "./index.ts",
-  "types": "./index.ts",
-  "license": "MIT",
+  "type": "module",
+  "files": [
+    "dist",
+    "migrations/**"
+  ],
+  "bin" : {
+    "db-migrate": "./dist/index.js"
+  },  
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
-    "lint": "eslint .",    
+    "lint": "eslint .",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "push": "drizzle-kit push:pg",
     "generate": "drizzle-kit generate:pg",
+    "build": "tsup src/index.ts --format esm",    
+    "migrate": "pnpm with-env tsx migrate/index.mts",
     "studio": "drizzle-kit studio",
     "typecheck": "tsc --noEmit",
     "with-env": "dotenv -e ../../.env --"
@@ -29,7 +36,7 @@
     "eslint": "^8.51.0",
     "pg": "^8.11.3",
     "prettier": "^3.0.3",
-    "tsx": "^3.14.0",
+    "tsup": "^7.2.0",
     "typescript": "^5.2.2"
   },
   "eslintConfig": {
@@ -38,5 +45,5 @@
       "@acme/eslint-config/base"
     ]
   },
-  "prettier": "@acme/prettier-config"
+  "prettier": "@acme/prettier-config"  
 }

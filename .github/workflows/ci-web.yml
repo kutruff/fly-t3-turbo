@@ -1,0 +1,71 @@
+name: CI - Web
+
+on:
+  pull_request:
+    branches: ["*"]
+    paths:
+      - "app/**"
+  push:
+    branches: ["main"]
+    paths:
+      - "app/**"
+  merge_group:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: dev
+    env:
+      DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/postgres"
+      DISCORD_CLIENT_ID: "1164960763065139242"
+      DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
+      NEXTAUTH_URL: "http://localhost:3000"
+      NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+      BASE_URL: "http://localhost:3000"
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.4.0
+        with:
+          package_json_file: ./app/package.json
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install deps (with cache)
+        run: pnpm install
+        working-directory: ./app
+
+      - name: Build, and type-check
+        run: pnpm turbo build typecheck
+        working-directory: ./app
+
+      - name: Check workspaces
+        run: pnpm manypkg check
+        working-directory: ./app
+
+  deploy-web:
+    needs: build
+    uses: kutruff/gadget/.github/workflows/deploy-web.yml@main
+    with:
+      environment: dev
+      # concurrency: dev
+    secrets: inherit

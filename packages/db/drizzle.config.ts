@@ -1,6 +1,7 @@
 import * as dotenv from "dotenv";
 import type { Config } from "drizzle-kit";
 
+//TODO: .env should be handled by pnpm script and general environment
 dotenv.config({
   path: "../../.env",
 });
@@ -11,7 +12,7 @@ if (!process.env.DATABASE_URL) {
 
 export default {
   schema: "./schema",
-  out: "./migrations",
+  out: "../db-migrate/migrations",
   driver: "pg",
   dbCredentials: {
     connectionString: process.env.DATABASE_URL,

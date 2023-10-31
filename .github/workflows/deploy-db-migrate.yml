@@ -1,0 +1,32 @@
+name: DB Migration
+
+# on:
+#   push:
+#     branches:
+#       - main
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Enter environment to use. (dev, production)"
+        required: true
+        default: "dev"
+jobs:
+  deploy:
+    name: Deploy db-migrate
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+    concurrency: ${{ github.event.inputs.environment }}
+    env:
+      DB_NAME: postgres
+      REGION: iad
+      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: scripts/build-db-migrator.sh -a ${{ vars.APP_NAME }}
+        working-directory: ./app
+      - run: flyctl auth docker
+      - run: deployment/scripts/deploy-db-migrator.sh -a ${{ vars.APP_NAME }} -r ${REGION}
+        working-directory: ./app
