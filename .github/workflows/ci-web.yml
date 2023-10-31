@@ -48,15 +48,12 @@ jobs:
 
       - name: Install deps (with cache)
         run: pnpm install
-        working-directory: ./app
 
       - name: Build, and type-check
         run: pnpm turbo build typecheck
-        working-directory: ./app
 
       - name: Check workspaces
         run: pnpm manypkg check
-        working-directory: ./app
 
   deploy-web:
     needs: build
