@@ -3,12 +3,8 @@ name: CI - Web
 on:
   pull_request:
     branches: ["*"]
-    paths:
-      - "app/**"
   push:
     branches: ["main"]
-    paths:
-      - "app/**"
   merge_group:
 
 jobs:
