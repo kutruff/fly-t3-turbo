@@ -7,16 +7,16 @@
     "dist",
     "migrations/**"
   ],
-  "bin" : {
+  "bin": {
     "db-migrate": "./dist/index.js"
-  },  
+  },
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
     "lint": "eslint .",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "push": "drizzle-kit push:pg",
     "generate": "drizzle-kit generate:pg",
-    "build": "tsup src/index.ts --format esm",    
+    "build": "tsup src/index.ts --format esm",
     "migrate": "pnpm with-env tsx migrate/index.mts",
     "studio": "drizzle-kit studio",
     "typecheck": "tsc --noEmit",
@@ -45,5 +45,5 @@
       "@acme/eslint-config/base"
     ]
   },
-  "prettier": "@acme/prettier-config"  
+  "prettier": "@acme/prettier-config"
 }

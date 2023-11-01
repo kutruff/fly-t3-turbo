@@ -273,7 +273,7 @@ importers:
         specifier: ^0.3.5
         version: 0.3.5
       '@t3-oss/env-nextjs':
-        specifier: ^0.7.0
+        specifier: ^0.7.1
         version: 0.7.1(typescript@5.2.2)(zod@3.22.4)
       next:
         specifier: ^13.5.6
