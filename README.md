@@ -76,20 +76,17 @@ fly auth login
 fly auth docker
 ```
 
-8. Add Github secret
+8. Add Github Environments - with variables and secrets
 
-Go to your repo's settings and navigate to the secrets and add your fly token there.
-The link looks like this. Just add your username and repo name:
-
-`https://github.com/<username>/<repo>/settings/secrets/actions`
-
-The secret name should be: `FLY_API_TOKEN`
+For the secret named: `FLY_API_TOKEN`
 
 And you can get a token that works on all your apps by running this command:
 
 ```bash
 fly tokens create org
 ```
+
+Go to your repo's settings and create two environments: `dev` and `production`.   You'll then set environment varialbes and secrets for each
 
 Pick your personal org or the org you made for the project. org tokens allow you to use them for several apps at once.
 
@@ -98,6 +95,10 @@ Pick your personal org or the org you made for the project. org tokens allow you
 10. Set the similarly named environment variables in `.github/workflows/web.yml`. (app name and region)
 
 11. install dependencies
+
+<img width="568" alt="image" src="https://github.com/kutruff/fly-t3-turbo/assets/874049/fffdffc5-1237-4da2-a36d-8430a64f14cb">
+
+<img width="541" alt="image" src="https://github.com/kutruff/fly-t3-turbo/assets/874049/6c31494e-e716-4bf4-9251-dc4b06d38e55">
 
 ```bash
 pnpm i
