@@ -19,6 +19,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: scripts/build-db-migrator.sh -a ${{ vars.APP_NAME }}
+      - run: deployment/scripts/build-db-migrator.sh -a ${{ vars.APP_NAME }}
       - run: flyctl auth docker
       - run: deployment/scripts/deploy-db-migrator.sh -a ${{ vars.APP_NAME }} -r ${REGION}
