@@ -1,9 +1,4 @@
-name: db-migrate - Deploy
-
-# on:
-#   push:
-#     branches:
-#       - main
+name: db-migrate - deploy()
 
 on:
   workflow_dispatch:
@@ -14,7 +9,6 @@ on:
         default: "dev"
 jobs:
   deploy:
-    name: db-migrate - Deploy
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environment }}
     concurrency: ${{ github.event.inputs.environment }}

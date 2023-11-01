@@ -1,19 +1,22 @@
-name: Web - Build
+name: web - build()
 
 on:
-  pull_request:
-    branches: ["*"]
-  push:
-    branches: ["main"]
-  merge_group:
+  workflow_call:
+    inputs:
+      environment:
+        default: "dev"
+        type: string
+        description: "Enter environment to use. (dev, production)"
+        required: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: dev
+    environment: ${{ inputs.environment }}
+    concurrency: ${{ inputs.environment }}
     env:
       DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/postgres"
-      DISCORD_CLIENT_ID: "141232154"
+      DISCORD_CLIENT_ID: "124124124"
       DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
       NEXTAUTH_URL: "http://localhost:3000"
       NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}

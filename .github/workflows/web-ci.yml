@@ -1,14 +1,18 @@
-name: Web - CI/CD
-
+name: web - CI
 on:
   push:
     branches: ["main"]
   merge_group:
 
 jobs:
-  web-deploy:
+  build:
+    uses: kutruff/fly-t3-turbo/.github/workflows/web-build.yml@main
+    with:
+      environment: dev
+    secrets: inherit
+  deploy:
+    needs: build
     uses: kutruff/fly-t3-turbo/.github/workflows/web-deploy.yml@main
     with:
       environment: dev
-      # concurrency: dev
     secrets: inherit

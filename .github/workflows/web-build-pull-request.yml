@@ -1,0 +1,13 @@
+name: web - build pull request
+
+on:
+  pull_request:
+    branches: ["*"]
+  merge_group:
+
+jobs:
+  build:
+    uses: kutruff/gadget/.github/workflows/web-build.yml@main
+    with:
+      environment: dev
+    secrets: inherit
