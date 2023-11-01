@@ -4,16 +4,19 @@ FROM mcr.microsoft.com/vscode/devcontainers/typescript-node:0-${VARIANT}
 
 COPY .devcontainer/scripts/install-aws-cli.sh /tmp/user-devcontainer-scripts/
 COPY .devcontainer/scripts/install-fly.sh /tmp/user-devcontainer-scripts/
-# [Optional] Uncomment this section to install additional OS packages.
-RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends \
-    postgresql-client \
-    && bash /tmp/user-devcontainer-scripts/install-aws-cli.sh \
-    && sudo -u node bash /tmp/user-devcontainer-scripts/install-fly.sh \
-    && mkdir -p /home/node/.aws \
-    && chown node:node /home/node/.aws \
-    && mkdir -p /data \
-    && chown -R node:node /data 
+
+RUN <<EOF 
+  apt-get update 
+  export DEBIAN_FRONTEND=noninteractive 
+  apt-get -y install --no-install-recommends \
+    postgresql-client
+
+  sudo -u node bash /tmp/user-devcontainer-scripts/install-fly.sh
+  bash /tmp/user-devcontainer-scripts/install-aws-cli.sh  
+  
+  mkdir -p /data
+  chown -R node:node /data
+EOF
 
 # [Optional] Uncomment if you want to install an additional version of node using nvm
 # ARG EXTRA_NODE_VERSION=10

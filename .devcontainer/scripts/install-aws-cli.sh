@@ -8,3 +8,6 @@ sudo ./aws/install
 popd
 
 rm -rf $INSTALL_DIR
+
+mkdir -p /home/node/.aws
+chown node:node /home/node/.aws
