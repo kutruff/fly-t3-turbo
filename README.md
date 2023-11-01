@@ -93,7 +93,7 @@ fly tokens create org
 
 Pick your personal org or the org you made for the project. org tokens allow you to use them for several apps at once.
 
-9. Set your environment variables in `deployment/web.toml`. `APP_NAME` and region are your fly.io web app name you picked earlier.  Change all the `fly.io` urls to match your app name.
+9. Set your environment variables in `deployment/web.toml`. `APP_NAME` and region are your fly.io web app name you picked earlier. Change all the `fly.io` urls to match your app name.
 
 10. Set the similarly named environment variables in `.github/workflows/web.yml`. (app name and region)
 
@@ -106,19 +106,19 @@ pnpm i
 12. Test your app locally which should now be at http://localhost:3000. The local postgres container is already funning for you.
 
 ```bash
-pnpm db:push 
+pnpm db:push
 pnpm dev
 ```
 
 13. Build and deploy a full stack to fly.io. You'll get a next.js deployment and a postgres cluster. It will also build and run the one-off DB migrator for you.
 
-You will be prompted to enter you discord secret and your `NEXTAUTH_SECRET` that are in your .env files. You can get those from the discord developer portal. 
+You will be prompted to enter you discord secret and your `NEXTAUTH_SECRET` that are in your .env files. You can get those from the discord developer portal.
 
 ```bash
-./scripts/create-full-stack.sh -a your-app-name -o organization -r iad
+./deployment/scripts/create-full-stack.sh -a your-app-name -o organization -r iad
 ```
 
-Just use a single node postgres cluster, and don't let it scale to zero. You can change that later.  
+Just use a single node postgres cluster, and don't let it scale to zero. You can change that later.
 
 You can now visit your app at `https://<your-app-name>.fly.dev`
 
