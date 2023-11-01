@@ -1,4 +1,4 @@
-name: CI - Web
+name: Web - Build
 
 on:
   pull_request:
@@ -13,7 +13,7 @@ jobs:
     environment: dev
     env:
       DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/postgres"
-      DISCORD_CLIENT_ID: "1164960763065139242"
+      DISCORD_CLIENT_ID: "141232154"
       DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
       NEXTAUTH_URL: "http://localhost:3000"
       NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}

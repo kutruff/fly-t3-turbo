@@ -1,4 +1,4 @@
-name: Web Deployment
+name: Web - Deploy
 
 on:
   workflow_dispatch:
@@ -18,7 +18,7 @@ on:
 
 jobs:
   deploy:
-    name: Deploy web
+    name: web-deploy
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     concurrency: ${{ inputs.environment }}

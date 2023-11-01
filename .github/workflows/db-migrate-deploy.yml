@@ -1,4 +1,4 @@
-name: DB Migration
+name: db-migrate - Deploy
 
 # on:
 #   push:
@@ -14,7 +14,7 @@ on:
         default: "dev"
 jobs:
   deploy:
-    name: Deploy db-migrate
+    name: db-migrate - Deploy
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environment }}
     concurrency: ${{ github.event.inputs.environment }}
