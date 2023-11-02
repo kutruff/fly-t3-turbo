@@ -37,9 +37,9 @@ The `db-migrate` package is new to this fork and not in the original T3 stack.  
 1. **Important:** Make sure to stop any other local postgres, pgadmin, or webservers that may be running.  Otherwise you'll get port conflicts.
 1. Instal Docker on your machine.
 1. In VSCode install the dev containers extension(https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers.)
-1. Fork this repo on github.  **Do not** pull it locally into a folder.  That's not how this works.
+1. Click "Use this template" on github.  **Do not** pull it locally into a folder.  That's not how this works.
 1. In VSCode, hit `F1` and run the `Dev Containers: Clone Repository in Named Container Volume`
-1. Paste git url of **your fork** in the prompt. For example when using ssh, it would be `git@github.com:your-username/your-fork-name.git`
+1. Paste the git url of **your fork** in the prompt. For example when using ssh, it would be `git@github.com:your-username/your-fork-name.git`
 1. Select `Create a new container volume.`
 1. Name your container volume to match the name of your repo.
 1. Use your repo name for the folder name as well.
