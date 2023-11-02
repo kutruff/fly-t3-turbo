@@ -6,13 +6,13 @@ on:
 
 jobs:
   build:
-    uses: kutruff/fly-t3-turbo/.github/workflows/web-build.yml@main
+    uses: ./.github/workflows/web-build.yml
     with:
       environment: dev
     secrets: inherit
   deploy:
     needs: build
-    uses: kutruff/fly-t3-turbo/.github/workflows/web-deploy.yml@main
+    uses: ./.github/workflows/web-deploy.yml
     with:
       environment: dev
     secrets: inherit

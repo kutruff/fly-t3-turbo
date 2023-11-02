@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    uses: kutruff/gadget/.github/workflows/web-build.yml@main
+    uses: ./.github/workflows/web-build.yml
     with:
       environment: dev
     secrets: inherit
