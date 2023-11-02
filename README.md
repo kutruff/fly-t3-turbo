@@ -22,7 +22,7 @@ Uses VSCode dev containers to provide a fully dockerized development environment
 - Scriptable tooling installation
 - `aws` cli installed as a convenience even though it's not needed for this starter project 
 
-This is a fork of the [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app` but completely setup for Fly.io and dockerized development with dockerized Drizzle migrations.
+This is a fork of the [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-turbo` but completely setup for Fly.io and dockerized development with dockerized Drizzle migrations.
 
 - [Next.js](https://nextjs.org)
 - [NextAuth.js](https://next-auth.js.org)
@@ -47,7 +47,7 @@ The `db-migrate` package is new to this fork and not in the original T3 stack.  
 
 ### Pick a name for your project.
 
-Think of an app name that is globally unique on fly.io that will also serve as your app's subdomain. You cannot reuse `fly-t3-demo` as it is already taken on fly.io. For example, if you chose `happy-app` will turn into `happy-app.fly.dev`. Make sure you pick something no one else has picked. We are going to be using the name a lot below and we need it for setting up OAuth even before we use the command line.  You don't need to do anything on the fly website or command line yet. You just need to decide what the name will be.
+Think of an app name that is globally unique on fly.io that will also serve as your app's subdomain. You cannot reuse `fly-t3` as it is already taken on fly.io. For example, if you chose `happy-app` will turn into `happy-app.fly.dev`. Make sure you pick something no one else has picked. We are going to be using the name a lot below and we need it for setting up OAuth even before we use the command line.  You don't need to do anything on the fly website or command line yet. You just need to decide what the name will be.
 
 ### Local development environment setup
 
@@ -59,7 +59,7 @@ Think of an app name that is globally unique on fly.io that will also serve as y
      - `DISCORD_CLIENT_ID`
      - `DISCORD_CLIENT_SECRET`
    - Go to the OAuth2 section on the left side of the screen.
-   - Add two redirect urls, but make sure you put the name of your app in the url:
+   - Add two redirect urls, but make sure you put the name of your app in the url: **Pay attention to http vs https in the urls!** Only localhost is http.
      - `http://localhost:3000/api/auth/callback/discord`
      - `https://<your-app-name>.fly.dev/api/auth/callback/discord`
      - `https://<your-app-name>-dev.fly.dev/api/auth/callback/discord`
@@ -112,12 +112,12 @@ You should now be able to see the demo at http://localhost:3000.
    - Just use a single node postgres cluster, and don't let it scale to zero. You can change that later.
    - `organization` is an optional parameter to the script.
    ```bash
-   ./deployment/scripts/create-full-stack.sh -a your-app-name -o organization -r iad
+   ./deployment/scripts/create-full-stack.sh -a your-app-name -o organization -r ord
    ```
    - You can now visit your app at `https://<your-app-name>.fly.dev`
 1. Repeat the above for your dev stack.  However, enter your app name with the `-dev` suffix in the command line.
    ```bash
-   ./deployment/scripts/create-full-stack.sh -a your-app-name-dev -o organization -r iad
+   ./deployment/scripts/create-full-stack.sh -a your-app-name-dev -o organization -r ord
    ```
    - You can see your dev deployment at `https://<your-app-name>-dev.fly.dev`
 
@@ -153,7 +153,7 @@ You can run migrations on github or from inside a VSCode terminal.
 Using a VSCode terminal:
 ```bash
 ./deployment/scripts/build-db-migrator.sh -a your-app-name
-./deployment/scripts/deploy-db-migrator.sh -a your-app-name -r iad
+./deployment/scripts/deploy-db-migrator.sh -a your-app-name -r ord
 ```
 
 Using Github actions:
@@ -167,7 +167,7 @@ You can run migrations on github or from inside a VSCode terminal.
 Using a VSCode terminal:
 ```bash
 ./deployment/scripts/build-db-migrator.sh -a your-app-name
-./deployment/scripts/deploy-db-migrator.sh -a your-app-name -r iad
+./deployment/scripts/deploy-db-migrator.sh -a your-app-name -r ord
 ```
 
 Using Github actions:

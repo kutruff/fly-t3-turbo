@@ -23,7 +23,6 @@ jobs:
     concurrency: ${{ inputs.environment }}
     env:
       DB_NAME: postgres
-      REGION: iad
       FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
     steps:
       - uses: actions/checkout@v4

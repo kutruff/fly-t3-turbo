@@ -4,7 +4,7 @@
 #
 
 app = "fly-t3"
-primary_region = "iad"
+primary_region = "ord"
 
 [build]
 dockerfile = "../apps/nextjs/Dockerfile"
@@ -19,7 +19,7 @@ BASE_URL = 'https://fly-t3.fly.dev'
 [env]
 NEXTAUTH_URL = 'https://fly-t3.fly.dev'
 BASE_URL = 'https://fly-t3.fly.dev'
-DISCORD_CLIENT_ID = '123456'
+DISCORD_CLIENT_ID = '1169671278433681448'
 HOSTNAME = '0.0.0.0'
 
 [http_service]
@@ -28,4 +28,5 @@ force_https = true
 auto_stop_machines = true
 auto_start_machines = true
 min_machines_running = 1
+max_machines_running = 2
 processes = ["app"]

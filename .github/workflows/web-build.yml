@@ -16,7 +16,7 @@ jobs:
     concurrency: ${{ inputs.environment }}
     env:
       DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/postgres"
-      DISCORD_CLIENT_ID: "123456"
+      DISCORD_CLIENT_ID: ${{ vars.DISCORD_CLIENT_ID }}
       DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
       NEXTAUTH_URL: "http://localhost:3000"
       NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}

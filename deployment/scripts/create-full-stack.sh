@@ -52,6 +52,6 @@ flyctl pg create --name ${DB_APP_NAME} --region ${REGION} ${ORG_ARGS}
 flyctl pg attach --yes -a ${APP_NAME} --database-name ${DB_NAME} ${DB_APP_NAME} 
 flyctl pg attach --yes -a ${DB_MIGRATOR_APP_NAME} --database-name ${DB_NAME} ${DB_APP_NAME} 
 
-${BASH_SOURCE%/*}/build-db-migrator.sh -a ${APP_NAME}
-${BASH_SOURCE%/*}/deploy-db-migrator.sh -a ${APP_NAME} -r ${REGION}
+# ${BASH_SOURCE%/*}/build-db-migrator.sh -a ${APP_NAME}
+# ${BASH_SOURCE%/*}/deploy-db-migrator.sh -a ${APP_NAME} -r ${REGION}
 ${BASH_SOURCE%/*}/deploy-web.sh -a ${APP_NAME}
