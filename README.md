@@ -130,10 +130,8 @@ You should now be able to see the demo at http://localhost:3000.
      - `dev` environment: `APP_NAME` is `demo-app-dev`
      - `production` environment: `APP_NAME` is `demo-app`  
   
-   This is what it should look like:  
-   <img width="568" alt="image" src="https://github.com/kutruff/fly-t3-turbo/assets/874049/fffdffc5-1237-4da2-a36d-8430a64f14cb">
-   <img width="541" alt="image" src="https://github.com/kutruff/fly-t3-turbo/assets/874049/6c31494e-e716-4bf4-9251-dc4b06d38e55">
-
+   This is what each environment should look like:
+   <img width="751" alt="image" src="https://github.com/kutruff/fly-t3-turbo/assets/874049/19f66b01-e924-46e6-87fe-79b9017c9910">
 
 1. In VSCode Push your changes.  If all worked correctly, your Github actions should run and update your dev stack on every push to main from now on.
 1. To deploy to production.  Go to "Actions" on Github, pick the `web - deploy()` workflow on the left.  Then hit "Run workflow button" below.  When prompted for an environment, type `production`.  That will build, and deploy to your production as well as migrate your database.
